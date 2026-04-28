@@ -1,0 +1,6 @@
+*.os
+*.import
+*/bin/*
+.sconsign.dblite
+.godot
+.claude

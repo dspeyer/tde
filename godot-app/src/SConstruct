@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+import os
+
+env = SConscript("/home/dspeyer/tde/godot-cpp/SConstruct")
+
+env.Append(CPPPATH=[".", "game"])
+env.Append(CPPFLAGS=["-std=c++17"])
+
+sources = [
+    "register_types.cpp",
+    "td_game.cpp",
+    "game/hp.cpp",
+    "game/game_sprite.cpp",
+    "game/tile.cpp",
+    "game/city.cpp",
+    "game/enemy.cpp",
+    "game/ammo.cpp",
+    "game/tower.cpp",
+    "game/board.cpp",
+]
+
+library = env.SharedLibrary(
+    target="../bin/libtowerdefense{}{}".format(
+        env["suffix"], env["SHLIBSUFFIX"]
+    ),
+    source=sources,
+)
+Default(library)
