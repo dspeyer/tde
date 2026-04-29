@@ -39,6 +39,8 @@ enum GameType {
     COUNT_GAME_TYPES
 };
 
+const std::vector<std::string> game_type_names = { "WITHSTAND", "ATTACK", "GATHER" };
+
 class Board {
 public:
     int width, height;

@@ -51,6 +51,7 @@ bool Board::_trueish(int& counter) {
 
 void Board::_generateMap() {
     game_type = (GameType)(int)(bfrand() * COUNT_GAME_TYPES);
+    new Announcement(game_type_names[game_type], this);
     static const std::vector<std::string> tiles = {/*"plains",*/"swamp","jungle","hills","mountains"};
     static std::map<std::string, std::string> halftype = {{"swamp","jungle"},{"jungle","swamp"},{"hills","jungle"},{"mountains","hills"}};
     static const std::vector<std::vector<int>> blocks = {{33, 127}, {0x2600, 0x2BFF}, {0x1F004, 0x1FAF8}, {0x1D100, 0x1D1FF}};

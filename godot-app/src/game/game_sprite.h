@@ -51,3 +51,10 @@ protected:
     void _unlsh();
     void _xlsh(bool remove);
 };
+
+class Announcement : public GameSprite {
+public:
+    std::string text;
+    Announcement(const std::string&, Board*);
+    void onUITick() override;
+};

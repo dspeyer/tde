@@ -1,6 +1,7 @@
 #include "game_sprite.h"
 #include "board.h"
 #include "hp.h"
+#include "constants.h"
 #include <cmath>
 
 uint32_t GameSprite::next_uid = 0;
@@ -44,3 +45,16 @@ void GameSprite::_xlsh(bool remove) {
 
 void GameSprite::_lsh()   { _xlsh(false); }
 void GameSprite::_unlsh() { _xlsh(true); }
+
+
+Announcement::Announcement(const std::string& _text, Board* _board)
+    : GameSprite(_board->width/2, _board->height/2, ZCOVER, _board->width/2, "", _board)
+    , text(_text) {}
+
+void Announcement:: onUITick() {
+    s *= 1.05;
+    opacity -= 0.03;
+    if (opacity <= 0) {
+        destroy();
+    }
+}

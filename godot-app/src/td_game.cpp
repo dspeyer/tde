@@ -574,6 +574,14 @@ void TDGame::_draw_sprite(const GameSprite* s) {
         }
     }
     
+    const Announcement* ann = dynamic_cast<const Announcement*>(s);
+    if (ann) {
+        draw_string(ThemeDB::get_singleton()->get_fallback_font(),
+                    Vector2(left,top+size/2),
+                    ann->text.c_str(),
+                    HORIZONTAL_ALIGNMENT_CENTER, size, size/ann->text.length(), Color(1,1,1,s->opacity));
+    }
+
     auto tex = _tex(s->img);
     if (tex.is_valid()) {
         Vector2 ctr = rect.get_center();
