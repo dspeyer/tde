@@ -197,7 +197,11 @@ void Board::_generateMap() {
         finalcr = std::round(std::pow(plainCount, 1.3f) / 5);
     else
         finalcr = std::numeric_limits<float>::infinity();
-
+    if (game_type == GATHER)
+        finalmoney = std::round(std::pow(plainCount, 1.3f) / 5);
+    else
+        finalmoney = std::numeric_limits<float>::infinity();        
+    
     for (auto& [uid, s] : sprites)
         if (dynamic_cast<City*>(s)) initLives += (int)s->hp->current;
 
@@ -297,8 +301,8 @@ void Board::tick() {
         if (it != sprites.end()) it->second->onTick();
     }
 
-    if (totcr >= finalcr) {
-        if (enemies.empty() && !gameOver) {
+    if ((totcr>=finalcr && enemies.empty()) || money_>finalmoney) {
+        if (!gameOver) {
             gameOver = true; victory = true;
         }
     }

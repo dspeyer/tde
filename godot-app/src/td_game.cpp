@@ -467,7 +467,9 @@ void TDGame::_draw_toolbar() {
         x += w + spacing;
     };
 
-    label("$"+String::num_int64(board->getMoney()), 48);
+    auto money_text = "$"+String::num_int64(board->getMoney());
+    if (board->game_type==GATHER) money_text += "/" + String::num_int64(board->finalmoney);
+    label(money_text, 48);
 
     draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x, SPEEDH), "Speed",
                 HORIZONTAL_ALIGNMENT_LEFT, -1, SPEEDH, Color(0.9f,0.9f,0.9f));

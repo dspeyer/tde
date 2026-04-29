@@ -35,6 +35,7 @@ struct MenuState {
 enum GameType {
     CR_VICTORY,
     ASSAULT,
+    GATHER,
     COUNT_GAME_TYPES
 };
 
@@ -55,6 +56,7 @@ public:
     int    tickCount  = 0;
     int    tickSpeed  = 0;
     float  money_     = 0;
+    float  finalmoney = 0;
     float  killedcr   = 0; 
     float  totcr      = 0;
     float  finalcr    = 0;
