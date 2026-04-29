@@ -188,6 +188,24 @@ void Board::_generateMap() {
                 py += py<height/2 ? -1 : 1;                
             }
         }
+        if (outer>150) {
+            GameSprite* city;
+            for (auto& [uid,sprite] : sprites) if (dynamic_cast<City*>(sprite)) { city=sprite; break; }
+            float px = city->x_ + (bfrand()<0.5 ? -.5 : .5);
+            float py = city->y_ + (bfrand()<0.5 ? -.5 : .5);
+            float dx = (bfrand()<0.5) ? -1 : 1;
+            float dy = bfrand() - 0.5;
+            while (px>0 && px<width) {
+                auto blockers = spritesOverlapping(px, py, 1);
+                for (auto* b : blockers) {
+                    if (b->blocksEnemy && !dynamic_cast<City*>(b) && !dynamic_cast<EvilCity*>(b)) {
+                        b->destroy();
+                    }
+                }
+                px += dx;
+                py += dy;
+            }
+        }
     }
     suppressRecalc = false;
 
