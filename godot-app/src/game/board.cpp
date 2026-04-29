@@ -147,7 +147,7 @@ void Board::_generateMap() {
     int ngood = (int)(bfrand() * 3) + 1;
     for (int i = 0; i < ngood; i++) {
         int x = std::floor(bfrand() * (width - 1));
-        int y = std::floor(bfrand() * height / 3 + 2 * height / 3);
+        int y = std::floor(bfrand() * height / 3 + 2 * height / 3 - 1);
         new City(x+.5, y+.5, this);
         for (int xi=0; xi<2; xi++)
             for (int yi=0; yi<2; yi++)
