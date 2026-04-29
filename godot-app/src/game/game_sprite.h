@@ -41,6 +41,7 @@ public:
     void setY(float v);
 
     virtual void onTick() {}
+    virtual void onUITick() {}
     virtual void destroy();
 
     friend class Board;

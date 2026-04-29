@@ -85,6 +85,7 @@ public:
 
     void start();
     void tick();
+    void uiTick();
 
     void recalcTargetting();
     std::pair<int,int> targettingProblem();

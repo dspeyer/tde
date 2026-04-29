@@ -290,6 +290,17 @@ int Board::spritesOverlappingCount(float x, float y, float s,
     return cnt;
 }
 
+void Board::uiTick() {
+    std::vector<uint32_t> uids;
+    uids.reserve(sprites.size());
+    for (auto& [uid,_] : sprites) uids.push_back(uid);
+    for (auto uid : uids) {
+        auto it = sprites.find(uid);
+        if (it != sprites.end()) it->second->onUITick();
+    }
+    if (onRender) onRender();
+}
+
 void Board::tick() {
     tickCount++;
     // Copy uid list to avoid invalidation during iteration

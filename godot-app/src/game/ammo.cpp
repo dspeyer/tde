@@ -94,7 +94,7 @@ FailMarker::FailMarker(float x, float y, float s, Board* board)
     opacity = 1;
 }
 
-void FailMarker::onTick() {
+void FailMarker::onUITick() {
     opacity -= 0.1f;
     if (opacity <= 0) destroy();
 }

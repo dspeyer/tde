@@ -35,8 +35,9 @@ protected:
     static void _bind_methods();
 
 private:
-    Board* board   = nullptr;
-    double tickAcc = 0;
+    Board* board      = nullptr;
+    double tickAcc    = 0;
+    double uiTickAcc  = 0;
     bool   showHelp     = false;
     bool   showResult   = false;
     bool   resultVictory  = false;

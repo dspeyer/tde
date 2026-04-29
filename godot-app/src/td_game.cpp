@@ -180,6 +180,7 @@ void TDGame::_destroy_board() {
     delete board;
     board = nullptr;
     tickAcc = 0;
+    uiTickAcc = 0;
 }
 
 void TDGame::new_game() {
@@ -217,7 +218,13 @@ void TDGame::_clamp_pan() {
 
 // ── Game loop ────────────────────────────────────────────────────────────────
 void TDGame::_process(double delta) {
-    if (!board || board->gameOver || board->tickSpeed == 0) return;
+    if (!board) return;
+    uiTickAcc += delta;
+    while (uiTickAcc >= 0.032) {
+        uiTickAcc -= 0.032;
+        board->uiTick();
+    }
+    if (board->gameOver || board->tickSpeed == 0) return;
     tickAcc += delta;
     double tickInterval = 0.032 / board->tickSpeed;
     while (tickAcc >= tickInterval) {

@@ -36,5 +36,5 @@ public:
 class FailMarker : public GameSprite {
 public:
     FailMarker(float x, float y, float s, Board* board);
-    void onTick() override;
+    void onUITick() override;
 };
