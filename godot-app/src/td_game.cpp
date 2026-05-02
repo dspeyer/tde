@@ -720,7 +720,7 @@ void TDGame::_draw_result() {
 
     float bx=W/2-50, by=H/2+20;
     draw_rect(Rect2(bx, by, 100, 36), Color(1,1,1));
-    draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(bx+10, by+24), "Play Again",
+    draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(bx+10, by+24), "New Game",
                 HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color(0.2f,0.2f,0.2f));
     _register_btn(bx, by, 100, 36, "again");
 }
