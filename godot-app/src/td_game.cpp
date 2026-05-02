@@ -241,7 +241,6 @@ void TDGame::_handle_tap(float px, float py) {
         if (btn == "help")   { showHelp = !showHelp; queue_redraw(); }
         if (btn == "new")    { new_game(); }
         if (btn == "arrows") { toggle_arrows(); }
-        if (btn == "again")  { new_game(); }
         if (btn == "retry")  { showHelp = showResult = false; _init_board(savedSeed_); }
         if (btn == "close")  { showHelp = false; queue_redraw(); }
         if (btn.size() >= 5 && btn.substr(0,5) == "speed") {
@@ -452,6 +451,7 @@ void TDGame::_draw_toolbar() {
     if (!board) return;
     const String HEART   = String::chr(0x2764); // ❤
     const String ARROW_NE = String::chr(0x2197); // ↗
+    const String RELOAD = String::chr(0x27F3); // ⟳
     auto* vp = get_viewport();
     float W = vp ? vp->get_visible_rect().size.x : 480;
 
@@ -461,7 +461,7 @@ void TDGame::_draw_toolbar() {
     int SPEEDH = 9;
     float bh2 = cy - SPEEDH;
     float bh = bh2 * 2;
-    int spacing = (W - 48 - 7*18 - 36 - 72 - 60 - 40) / 6;
+    int spacing = (W - 48 - 7*18 - 36 - 72 - 60 - 20 - 40) / 7;
     float x = spacing / 2;
     auto label = [&](const String& txt, float w) {
         draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x+2, cy+5), txt,
@@ -509,6 +509,7 @@ void TDGame::_draw_toolbar() {
     label(String::utf8(board->getProgress().c_str()), 72);
 
     button((board->showArrows ? String("Hide") : String("Show")) + ARROW_NE, 60, "arrows");
+    button(RELOAD,  20, "retry");
     button("New",  40, "new");
 }
 
@@ -724,12 +725,12 @@ void TDGame::_draw_result() {
     draw_rect(Rect2(bx, by, 100, 36), Color(1,1,1));
     draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(bx+10, by+24), "New Game",
                 HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color(0.2f,0.2f,0.2f));
-    _register_btn(bx, by, 100, 36, "again");
+    _register_btn(bx, by, 100, 36, "new");
 
     if (!resultVictory) {
         float by2 = by + 46;
-        draw_rect(Rect2(bx+10, by2, 80, 36), Color(1,1,1));
-        draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(bx+20, by2+24), "Try Again",
+        draw_rect(Rect2(bx+10, by2, 80, 32), Color(1,1,1));
+        draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(bx+20, by2+22), "Try Again",
                     HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color(0.2f,0.2f,0.2f));
         _register_btn(bx, by2, 100, 36, "retry");
     }
