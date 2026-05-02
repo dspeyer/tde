@@ -146,7 +146,7 @@ void TDGame::_load_textures() {
     }
 }
 
-void TDGame::_init_board() {
+void TDGame::_init_board(uint32_t seed) {
     auto* vp = get_viewport();
     Vector2 vpSize = vp ? vp->get_visible_rect().size : Vector2(480, 854);
     float boardW = vpSize.x;
@@ -172,7 +172,8 @@ void TDGame::_init_board() {
         resultFlawless = fl;
         queue_redraw();
     };
-    board->start();
+    board->start(seed);
+    savedSeed_ = board->savedSeed;
     queue_redraw();
 }
 
@@ -241,6 +242,7 @@ void TDGame::_handle_tap(float px, float py) {
         if (btn == "new")    { new_game(); }
         if (btn == "arrows") { toggle_arrows(); }
         if (btn == "again")  { new_game(); }
+        if (btn == "retry")  { showHelp = showResult = false; _init_board(savedSeed_); }
         if (btn == "close")  { showHelp = false; queue_redraw(); }
         if (btn.size() >= 5 && btn.substr(0,5) == "speed") {
             set_tick_speed(std::stoi(btn.substr(5)));
@@ -723,4 +725,12 @@ void TDGame::_draw_result() {
     draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(bx+10, by+24), "New Game",
                 HORIZONTAL_ALIGNMENT_LEFT,-1,16,Color(0.2f,0.2f,0.2f));
     _register_btn(bx, by, 100, 36, "again");
+
+    if (!resultVictory) {
+        float by2 = by + 46;
+        draw_rect(Rect2(bx+10, by2, 80, 36), Color(1,1,1));
+        draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(bx+20, by2+24), "Try Again",
+                    HORIZONTAL_ALIGNMENT_LEFT,-1,14,Color(0.2f,0.2f,0.2f));
+        _register_btn(bx, by2, 100, 36, "retry");
+    }
 }

@@ -38,6 +38,7 @@ private:
     Board* board      = nullptr;
     double tickAcc    = 0;
     double uiTickAcc  = 0;
+    uint32_t savedSeed_ = 0;
     bool   showHelp     = false;
     bool   showResult   = false;
     bool   resultVictory  = false;
@@ -82,7 +83,7 @@ private:
     void _handle_tap(float px, float py);
 
     void _load_textures();
-    void _init_board();
+    void _init_board(uint32_t seed = 0);
     void _destroy_board();
 
     void _draw_toolbar();

@@ -85,7 +85,9 @@ public:
     void  setMoney(float v);
     void  addMoney(float v) { setMoney(money_ + v); }
 
-    void start();
+    uint32_t savedSeed = 0;
+
+    void start(uint32_t seed = 0);
     void tick();
     void uiTick();
 

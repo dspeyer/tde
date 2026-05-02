@@ -42,7 +42,12 @@ void Board::setMoney(float v) {
     if (onRender) onRender();
 }
 
-void Board::start() { _generateMap(); }
+void Board::start(uint32_t seed) {
+    if (seed == 0) seed = std::random_device{}();
+    savedSeed = seed;
+    brng().seed(seed);
+    _generateMap();
+}
 
 bool Board::_trueish(int& counter) {
     if (++counter > 200) return false;
