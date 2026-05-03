@@ -5,6 +5,7 @@
 #include "tile.h"
 #include "constants.h"
 #include <cmath>
+#include <iostream>
 
 static float sq(float x) { return x*x; }
 
@@ -42,7 +43,11 @@ void Ammo::onTick() {
     if (ammoType == "wind") {
         for (auto* t : over) {
             if (auto* e = dynamic_cast<Enemy*>(t)) {
-                e->vx = vx / 2; e->vy = vy / 2;
+                float dot = e->vx*vx + e->vy*vy;
+                std::cerr << "dot=" << dot << std::endl;
+                float adj = 40 + 4000000 * std::pow(std::max(-dot, 0.0f), 2);
+                e->vx += vx / adj;
+                e->vy += vy / adj;
             }
         }
     }
