@@ -461,54 +461,54 @@ void TDGame::_draw_toolbar() {
     int SPEEDH = 9;
     float bh2 = cy - SPEEDH;
     float bh = bh2 * 2;
-    int spacing = (W - 48 - 7*18 - 36 - 72 - 60 - 20 - 40) / 7;
+    int spacing = (W - 7*18 - 56 - 36 - 72 - 20 - 20 - 40) / 7;
     float x = spacing / 2;
-    auto label = [&](const String& txt, float w) {
+    auto label = [&](const String& txt, int w) {
         draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x+2, cy+5), txt,
-                    HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1,1,1));
+                    HORIZONTAL_ALIGNMENT_CENTER, w, 14, Color(1,1,1));
         x += w + spacing;
     };
-    auto button = [&](const String& txt, float w, const std::string& id) {
-        draw_rect(Rect2(x, cy-bh2, w, bh), Color(1,1,1,0.2f));
+    auto button = [&](const String& txt, float w, const std::string& id, float opacity=0.2f) {
+        draw_rect(Rect2(x, cy-bh2, w, bh), Color(1,1,1,opacity));
         draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x+4, cy+5), txt,
                     HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1,1,1));
-        _register_btn(x, cy-bh2, w, bh, id);
+        _register_btn(x, 0, w, cy+bh/2, id);
         x += w + spacing;
     };
-
-    auto money_text = "$"+String::num_int64(board->getMoney());
-    if (board->game_type==GATHER) money_text += "/" + String::num_int64(board->finalmoney);
-    label(money_text, 48);
 
     draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x, SPEEDH), "Speed",
                 HORIZONTAL_ALIGNMENT_LEFT, -1, SPEEDH, Color(0.9f,0.9f,0.9f));
-    float sx = x;
     for (int i = 0; i <= 6; i++) {
-        float bx = sx + i * 18;
         bool active = i==0 ? (board->tickSpeed == i) : (board->tickSpeed >= i);
         auto color = active ? Color(0.3f,0.6f,1.f) : Color(1,1,1,0.2f);
         if (i == 0 ) {
-            draw_rect(Rect2(bx+1, cy-bh2*0.7, 4, bh*0.7), color);
-            draw_rect(Rect2(bx+7, cy-bh2*0.7, 4, bh*0.7), color);
+            draw_rect(Rect2(x+1, cy-bh2*0.7, 4, bh*0.7), color);
+            draw_rect(Rect2(x+7, cy-bh2*0.7, 4, bh*0.7), color);
         } else {
             PackedVector2Array points;
-            points.push_back(Vector2(bx, cy-bh2));
-            points.push_back(Vector2(bx, cy+bh2));
-            points.push_back(Vector2(bx+16, cy));
+            points.push_back(Vector2(x, cy-bh2));
+            points.push_back(Vector2(x, cy+bh2));
+            points.push_back(Vector2(x+16, cy));
             PackedColorArray pca;
             pca.push_back(color);
             draw_polygon(points, pca);
         }
-        draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(bx+3, cy+5),
+        draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x+3, cy+5),
                     String::num_int64(i), HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1,1,1));
-        _register_btn(bx, cy-bh2, 16, bh, "speed"+std::to_string(i));
+        int lm = i==0 ? x : 0;
+        _register_btn(x-lm, 0, 16+lm, cy+bh/2, "speed"+std::to_string(i));
+        x += 18;
     }
-    x = sx + 7*18 + spacing;
+    x += spacing;
 
+    auto money_text = "$"+String::num_int64(board->getMoney());
+    if (board->game_type==GATHER) money_text += "/" + String::num_int64(board->finalmoney);
+    label(money_text, 56);
+    
     label(String::num_int64(board->getLives()) + " " + HEART, 36);
     label(String::utf8(board->getProgress().c_str()), 72);
 
-    button((board->showArrows ? String("Hide") : String("Show")) + ARROW_NE, 60, "arrows");
+    button(ARROW_NE, 20, "arrows", board->showArrows ? 0.4 : 0.2);
     button(RELOAD,  20, "retry");
     button("New",  40, "new");
 }
