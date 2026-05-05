@@ -49,8 +49,9 @@ GameSprite* Tower::pickTarget() {
         for (auto& [uid, i] : board->enemies) {
             float clump = 0;
             for (auto& [uid2, j] : board->enemies) {
-                float d = std::max(std::sqrt(sq(i->x_-j->x_)+sq(i->y_-j->y_)), 0.1f);
-                if (d<2) clump += std::pow(d, -1.5);
+                float d = std::sqrt(sq(i->x_-j->x_)+sq(i->y_-j->y_));
+                if (d<0.1) clump += 1;
+                else if (d<1) clump += 0.1 / d;
             }
             // store clumpiness — attach as custom field via dynamic_cast
             if (auto* en = dynamic_cast<Enemy*>(i))
