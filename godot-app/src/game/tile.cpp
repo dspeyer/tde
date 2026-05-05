@@ -8,7 +8,7 @@ Tile::Tile(float x, float y, const std::string& img, Board* board)
 {
     blocksTower = (img == "jungle" || img == "swamp" || img == "mountains");
     blocksEnemy = (img == "jungle" || img == "hills" || img == "mountains");
-    hp          = new HP(this, 200);
+    hp          = blocksEnemy ? new HP(this, 200) : NULL;
     isJungle    = (img == "jungle");
     targettable = (img == "jungle");
 }
