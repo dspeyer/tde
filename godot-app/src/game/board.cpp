@@ -442,6 +442,8 @@ void Board::handleTap(float cx, float cy) {
 }
 
 void Board::_showTowerMenu(Tower* tower, GameSprite* rangeSprite) {
+    if (tower->dying) return;
+
     if (!rangeSprite) {
         rangeSprite = new GameSprite(tower->x_, tower->y_, ZTOWER-1,
                                      2*tower->range, "", this);
