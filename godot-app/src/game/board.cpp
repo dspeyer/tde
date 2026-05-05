@@ -193,7 +193,7 @@ void Board::_generateMap() {
                 py += py<height/2 ? -1 : 1;                
             }
         }
-        if (outer>150) {
+        if (outer>100) {
             GameSprite* city;
             for (auto& [uid,sprite] : sprites) if (dynamic_cast<City*>(sprite)) { city=sprite; break; }
             float px = city->x_ + (bfrand()<0.5 ? -.5 : .5);
@@ -211,6 +211,26 @@ void Board::_generateMap() {
                 py += dy;
             }
         }
+        if (outer>150) {
+            for (int x=0; x<width; x++) {
+                for (int y=0; y<height; y++) {
+                    auto tc = targetting[x][y];
+                    if (tc.dist>CHEATCOST) {
+                        int x2 = x+tc.dx;
+                        int y2 = y+tc.dy;
+                        if (targetting[x2][y2].dist<CHEATCOST && bfrand()<0.5) {
+                            auto blockers = spritesOverlapping(x2, y2, 1);
+                            for (auto* b : blockers) {
+                                if (b->blocksEnemy && !dynamic_cast<City*>(b) && !dynamic_cast<EvilCity*>(b)) {
+                                    b->destroy();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }                   
+
     }
     suppressRecalc = false;
 
