@@ -89,8 +89,8 @@ void Tower::onTick() {
         } else {
             opacity = std::min(1.0f, opacity + 0.02f);
         }
+        return;
     }
-    if (dying) return;
 
     reload++;
     GameSprite* t = pickTarget();
@@ -116,6 +116,7 @@ bool Tower::upgrade() {
     range     *= 1.1f;
     reloadTime /= 1.1f;
     upgraded++;
+    opacity = 0.5;
     return true;
 }
 
