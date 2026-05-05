@@ -113,7 +113,6 @@ public:
 
 private:
     void _generateMap();
-    bool _trueish(int& counter);
 
     void _showTowerMenu(Tower* tower, GameSprite* rangeSprite = nullptr);
     void _showMenu(float x, float y, const std::vector<MenuOpt>& opts,

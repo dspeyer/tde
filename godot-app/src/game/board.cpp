@@ -49,11 +49,6 @@ void Board::start(uint32_t seed) {
     _generateMap();
 }
 
-bool Board::_trueish(int& counter) {
-    if (++counter > 200) return false;
-    return true;
-}
-
 void Board::_generateMap() {
     game_type = (GameType)(int)(bfrand() * COUNT_GAME_TYPES);
     new Announcement(game_type_names[game_type], this);
@@ -166,13 +161,11 @@ void Board::_generateMap() {
 
     // Ensure valid path
     suppressRecalc = true;
-    int outer = 0;
-    while (_trueish(outer)) {
+    for (int attempts=0; attempts<200; attempts++) {
         recalcTargetting();
         auto [px,py] = targettingProblem();
         if (px==-1) break;
-        int inner = 0;
-        while (_trueish(inner)) {
+        for (int steps=0; steps<200; steps++) {
             auto blockers = spritesOverlapping(px, py, 1);
             for (auto* b : blockers) {
                 if (b->blocksEnemy && !dynamic_cast<City*>(b) && !dynamic_cast<EvilCity*>(b)) {
@@ -193,7 +186,7 @@ void Board::_generateMap() {
                 py += py<height/2 ? -1 : 1;                
             }
         }
-        if (outer>100) {
+        if (attempts>100) {
             GameSprite* city;
             for (auto& [uid,sprite] : sprites) if (dynamic_cast<City*>(sprite)) { city=sprite; break; }
             float px = city->x_ + (bfrand()<0.5 ? -.5 : .5);
@@ -211,7 +204,7 @@ void Board::_generateMap() {
                 py += dy;
             }
         }
-        if (outer>150) {
+        if (attempts>150) {
             for (int x=0; x<width; x++) {
                 for (int y=0; y<height; y++) {
                     auto tc = targetting[x][y];
