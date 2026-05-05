@@ -461,7 +461,7 @@ void TDGame::_draw_toolbar() {
     int SPEEDH = 9;
     float bh2 = cy - SPEEDH;
     float bh = bh2 * 2;
-    int spacing = (W - 7*18 - 56 - 36 - 72 - 20 - 20 - 40) / 7;
+    int spacing = (W - 7*18 - 65 - 36 - 72 - 20 - 20 - 40) / 7;
     float x = spacing / 2;
     auto label = [&](const String& txt, int w) {
         draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x+2, cy+5), txt,
@@ -503,7 +503,7 @@ void TDGame::_draw_toolbar() {
 
     auto money_text = "$"+String::num_int64(board->getMoney());
     if (board->game_type==GATHER) money_text += "/" + String::num_int64(board->finalmoney);
-    label(money_text, 56);
+    label(money_text, 65);
     
     label(String::num_int64(board->getLives()) + " " + HEART, 36);
     label(String::utf8(board->getProgress().c_str()), 72);
