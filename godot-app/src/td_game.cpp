@@ -461,14 +461,30 @@ void TDGame::_draw_toolbar() {
     int SPEEDH = 9;
     float bh2 = cy - SPEEDH;
     float bh = bh2 * 2;
-    int spacing = (W - 7*18 - 65 - 36 - 72 - 20 - 20 - 40) / 7;
+
+    std::vector<String> texts = {
+        "$"+String::num_int64(board->getMoney()) + (board->game_type==GATHER ? ("/" + String::num_int64(board->finalmoney)) : ""),
+        String::num_int64(board->getLives()) + " " + HEART,
+        String::utf8(board->getProgress().c_str()),
+        ARROW_NE,
+        RELOAD,
+        "New"
+    };
+    auto tw = [](const String& s) { return ThemeDB::get_singleton()->get_fallback_font()->get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x; };
+    int button_padding = 10;
+    int stuff_width = 7*18; // speeds
+    for (auto& t : texts) stuff_width += tw(t);
+    stuff_width += button_padding * 3;
+    int spacing = (W - stuff_width) / 7;
     float x = spacing / 2;
-    auto label = [&](const String& txt, int w) {
+    auto label = [&](const String& txt) {
+        int w = tw(txt);
         draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x+2, cy+5), txt,
                     HORIZONTAL_ALIGNMENT_CENTER, w, 14, Color(1,1,1));
         x += w + spacing;
     };
-    auto button = [&](const String& txt, float w, const std::string& id, float opacity=0.2f) {
+    auto button = [&](const String& txt, const std::string& id, float opacity=0.2f) {
+        int w = tw(txt)+button_padding;
         draw_rect(Rect2(x, cy-bh2, w, bh), Color(1,1,1,opacity));
         draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(x+4, cy+5), txt,
                     HORIZONTAL_ALIGNMENT_LEFT, -1, 14, Color(1,1,1));
@@ -501,16 +517,13 @@ void TDGame::_draw_toolbar() {
     }
     x += spacing;
 
-    auto money_text = "$"+String::num_int64(board->getMoney());
-    if (board->game_type==GATHER) money_text += "/" + String::num_int64(board->finalmoney);
-    label(money_text, 65);
-    
-    label(String::num_int64(board->getLives()) + " " + HEART, 36);
-    label(String::utf8(board->getProgress().c_str()), 72);
+    label(texts[0]);
+    label(texts[1]);
+    label(texts[2]);
 
-    button(ARROW_NE, 20, "arrows", board->showArrows ? 0.4 : 0.2);
-    button(RELOAD,  20, "retry");
-    button("New",  40, "new");
+    button(texts[3], "arrows", board->showArrows ? 0.4 : 0.2);
+    button(texts[4], "retry");
+    button(texts[5], "new");
 }
 
 bool compare_sprite(const GameSprite* a, const GameSprite* b) {
