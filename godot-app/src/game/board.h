@@ -54,6 +54,7 @@ public:
     std::vector<std::vector<TargetCell>> targetting;
 
     GameType game_type;
+    const std::string& game_type_name() { return game_type_names[game_type]; }
     
     int    tickCount  = 0;
     int    tickSpeed  = 0;

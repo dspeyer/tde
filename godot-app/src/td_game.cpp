@@ -468,14 +468,15 @@ void TDGame::_draw_toolbar() {
         String::utf8(board->getProgress().c_str()),
         ARROW_NE,
         RELOAD,
-        "New"
+        "New",
+        String("")+board->game_type_name()[0]
     };
     auto tw = [](const String& s) { return ThemeDB::get_singleton()->get_fallback_font()->get_string_size(s, HORIZONTAL_ALIGNMENT_LEFT, -1, 14).x; };
     int button_padding = 10;
     int stuff_width = 7*18; // speeds
     for (auto& t : texts) stuff_width += tw(t);
     stuff_width += button_padding * 3;
-    int spacing = (W - stuff_width) / 7;
+    int spacing = (W - stuff_width) / 8;
     float x = spacing / 2;
     auto label = [&](const String& txt) {
         int w = tw(txt);
@@ -524,6 +525,11 @@ void TDGame::_draw_toolbar() {
     button(texts[3], "arrows", board->showArrows ? 0.4 : 0.2);
     button(texts[4], "retry");
     button(texts[5], "new");
+
+    int lw = tw(texts[6]);
+    Vector2 center(x+2+lw/2, cy);
+    draw_circle(center, TOOLBAR_H*0.3, Color(0,0,0,0.2));
+    label(texts[6]);
 }
 
 bool compare_sprite(const GameSprite* a, const GameSprite* b) {
@@ -609,13 +615,13 @@ void TDGame::_draw_sprite(const GameSprite* s) {
     }
 
 
-    /*    const Enemy* enn = dynamic_cast<const Enemy*>(s);
+    const Enemy* enn = dynamic_cast<const Enemy*>(s);
     if (enn) {
         auto txt = String::num(int(enn->clumpScore*1000)/1000.0f);
         draw_string(ThemeDB::get_singleton()->get_fallback_font(),
                     rect.get_center(), txt,
                     HORIZONTAL_ALIGNMENT_CENTER, -1, 10*boardZoom, Color(1,1,1));
-                    }*/
+    }
     
     if (s->hp && s->hp->damaged) {
         float bw = size * 0.94f, bh = size * 0.07f;
