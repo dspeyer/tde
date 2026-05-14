@@ -615,15 +615,15 @@ void TDGame::_draw_sprite(const GameSprite* s) {
         draw_rect(rect, Color(0.5f,0.5f,0.5f,s->opacity));
     }
 
-    /*
-    const Enemy* enn = dynamic_cast<const Enemy*>(s);
+    
+    /* const Enemy* enn = dynamic_cast<const Enemy*>(s);
     if (enn) {
         char txt[10];
         snprintf(txt, sizeof(txt), "%.2g", enn->clumpScore);
         draw_string(ThemeDB::get_singleton()->get_fallback_font(),
                     rect.get_center(), txt,
                     HORIZONTAL_ALIGNMENT_CENTER, -1, 10*boardZoom, Color(1,1,1));
-                    }*/
+                    } */
     
     if (s->hp && s->hp->damaged) {
         float bw = size * 0.94f, bh = size * 0.07f;

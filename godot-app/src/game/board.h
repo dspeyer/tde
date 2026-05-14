@@ -57,6 +57,7 @@ public:
     const std::string& game_type_name() { return game_type_names[game_type]; }
     
     int    tickCount  = 0;
+    int lastClumpTick = -1;
     int    tickSpeed  = 0;
     float  money_     = 0;
     float  finalmoney = 0;

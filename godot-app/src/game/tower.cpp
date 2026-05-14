@@ -9,7 +9,6 @@
 #include <limits>
 
 static float sq(float x) { return x*x; }
-static int lastClumpTick = -1;
 
 Tower::Tower(float x, float y, const std::string& img, Board* board)
     : GameSprite(x, y, ZTOWER, 2, img, board)
@@ -45,7 +44,7 @@ GameSprite* Tower::pickTarget() {
             targets.push_back(e);
     if (targets.empty()) return nullptr;
 
-    if (policy == "clump" && lastClumpTick < board->tickCount) {
+    if (policy == "clump" && board->lastClumpTick < board->tickCount) {
         for (auto& [uid, i] : board->enemies) {
             float clump = 0;
             for (auto& [uid2, j] : board->enemies) {
@@ -57,7 +56,7 @@ GameSprite* Tower::pickTarget() {
             if (auto* en = dynamic_cast<Enemy*>(i))
                 en->clumpScore = clump;
         }
-        lastClumpTick = board->tickCount;
+        board->lastClumpTick = board->tickCount;
     }
 
     GameSprite* best = targets[0];
