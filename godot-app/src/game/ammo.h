@@ -29,7 +29,7 @@ public:
 
 class Explosion : public GameSprite {
 public:
-    Explosion(float x, float y, float damage, Board* board);
+    Explosion(float x, float y, float size, float damage, Board* board);
     void onTick() override;
 };
 

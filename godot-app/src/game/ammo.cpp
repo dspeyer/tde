@@ -30,7 +30,7 @@ void Ammo::onTick() {
     for (auto* t : over) {
         if (ammoType == "rocket" && (dynamic_cast<Enemy*>(t) || t == board->target)) {
             setX(x_ + 2*vx); setY(y_ + 2*vy);
-            new Explosion(x_, y_, damage, board);
+            new Explosion(x_, y_, s*6, damage, board);
             destroy(); return;
         }
         if (!dynamic_cast<Enemy*>(t) && t != board->target) continue;
@@ -79,11 +79,11 @@ void LaserBolt::onTick() {
 }
 
 // Explosion ------------------------------------------------------------------
-Explosion::Explosion(float x, float y, float damage, Board* board)
-    : GameSprite(x, y, ZAMMO, 3, "explosion", board)
+Explosion::Explosion(float x, float y, float size, float damage, Board* board)
+    : GameSprite(x, y, ZAMMO, size, "explosion", board)
 {
     opacity = 1;
-    for (auto* e : board->spritesOverlapping(x, y, 3))
+    for (auto* e : board->spritesOverlapping(x, y, size))
         if (dynamic_cast<Enemy*>(e) && e->hp) e->hp->hurt(damage);
 }
 

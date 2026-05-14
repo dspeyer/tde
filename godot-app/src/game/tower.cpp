@@ -115,6 +115,7 @@ bool Tower::upgrade() {
     damage    *= 1.5f;
     range     *= 1.1f;
     reloadTime /= 1.1f;
+    if (ammo=="rocket" || ammo=="flame") ammosize *= 1.1f;
     upgraded++;
     opacity = 0.5;
     return true;
