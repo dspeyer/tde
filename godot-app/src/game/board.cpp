@@ -464,7 +464,7 @@ void Board::_showTowerMenu(Tower* tower, GameSprite* rangeSprite) {
         rangeSprite->opacity = 0.7f;
     }
 
-    int sell = tower->cost / 2;
+    int sell = tower->opacity==0.5f ? tower->cost : tower->cost/2;
     std::vector<MenuOpt> opts = {
         {"upgrade", tower->cost, "$"+std::to_string(tower->cost)},
         {"sell",    -sell,       "+$"+std::to_string(sell)},

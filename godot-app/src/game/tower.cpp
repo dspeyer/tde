@@ -121,9 +121,14 @@ bool Tower::upgrade() {
 }
 
 void Tower::sell() {
-    board->addMoney(cost / 2);
-    dying = true;
-    opacity = 0.75f;
+    if (opacity==0.5f) {
+        board->addMoney(cost);
+        destroy();
+    } else {
+        board->addMoney(cost / 2);
+        dying = true;
+        opacity = 0.75f;
+    }
 }
 
 void Tower::nextPolicy() {
