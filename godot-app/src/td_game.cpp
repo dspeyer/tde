@@ -284,6 +284,7 @@ void TDGame::_input(const Ref<InputEvent>& event) {
                     touchTargetedAtPress_ = board->trySetTarget(cx, cy);
                 }
             } else if (touches_.size() == 2) {
+                touchWasPinching_ = true;
                 auto it = touches_.begin();
                 Vector2 a = it->second; ++it;
                 Vector2 b = it->second;
@@ -293,7 +294,7 @@ void TDGame::_input(const Ref<InputEvent>& event) {
                 pinchStartPan_  = Vector2(boardPanX, boardPanY);
             }
         } else {
-            if ((int)touches_.size() == 1 && idx == touchPanIdx_ && !touchDidDrag_) {
+            if ((int)touches_.size() == 1 && idx == touchPanIdx_ && !touchDidDrag_ && !touchWasPinching_) {
                 if (!touchTargetedAtPress_)
                     _handle_tap(touches_[idx].x, touches_[idx].y);
                 touchTargetedAtPress_ = false;
@@ -303,6 +304,8 @@ void TDGame::_input(const Ref<InputEvent>& event) {
                 touchPanIdx_   = touches_.begin()->first;
                 touchDragLast_ = touches_.begin()->second;
                 touchDidDrag_  = false;
+            } else if (touches_.empty()) {
+                touchWasPinching_ = false;
             }
         }
         get_viewport()->set_input_as_handled();

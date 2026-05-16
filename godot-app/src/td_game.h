@@ -66,6 +66,7 @@ private:
     std::unordered_map<int, Vector2> touches_;
     int     touchPanIdx_    = -1;
     bool    touchDidDrag_          = false;
+    bool    touchWasPinching_      = false;
     bool    touchTargetedAtPress_  = false;
     Vector2 touchDragLast_;
     float   pinchStartDist_ = 0.0f;
