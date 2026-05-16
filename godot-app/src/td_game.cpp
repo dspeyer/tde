@@ -40,10 +40,14 @@ Ref<Font> _get_font_for(int cp) {
     if (font_file.is_valid() && font_file->has_char(cp)) return font_file;
     font_file->load_dynamic_font("res://assets/fonts/NotoSansMath-Regular.ttf");    
     if (font_file.is_valid() && font_file->has_char(cp)) return font_file;
+    font_file->load_dynamic_font("res://assets/fonts/NotoSerifHebrew.ttf");    
+    if (font_file.is_valid() && font_file->has_char(cp)) return font_file;
     font_file->load_dynamic_font("res://assets/fonts/NotoMusic-Regular.ttf");    
     if (font_file.is_valid() && font_file->has_char(cp)) return font_file;
     font_file->load_dynamic_font("res://assets/fonts/ShipporiAntiqueB1-Regular.ttf");
     if (font_file.is_valid() && font_file->has_char(cp)) return font_file;
+    font_file->load_dynamic_font("res://assets/fonts/NotoSansEgyptianHieroglyphs-Regular.ttf");
+    if (font_file.is_valid() && font_file->has_char(cp)) return font_file;    
     return Ref<Font>();
 }
 
