@@ -747,7 +747,7 @@ void TDGame::_draw_result() {
     draw_rect(Rect2(0,0,W,H), Color(0,0,0,0.5f));
 
     String title = resultVictory
-        ? (resultFlawless ? "Flawless Victory!" : "Victory!")
+        ? (resultFlawless ? "Flawless Victory!" : "Victory")
         : "Defeat";
     Color tc = resultVictory ? Color(0,1,0) : Color(1,0,0);
     draw_string(ThemeDB::get_singleton()->get_fallback_font(), Vector2(0, H/2-30),
