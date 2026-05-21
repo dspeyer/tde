@@ -2,7 +2,7 @@
 
 This is a classic Tower Defense game with procedurally generated level so you never run out.
 
-You can download it [as an APK](godot-app/bin/TDEternal.apk)
+You can download it [as an APK](https://github.com/dspeyer/tde/raw/refs/heads/main/godot-app/bin/TDEternal.apk)
 
 ## Basics
 
